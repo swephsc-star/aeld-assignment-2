@@ -5,30 +5,24 @@
 set -e
 set -u
 
-if [ $# -lt 3 ]
+
+if [ $# -ne 2 ]
 then
-	if [ $# -lt 2 ]
-	then
-		echo "not all arguments are provided"
-		exit 1
-	fi
-	
+	echo "not all arguments are provided"
+	exit 1
+
+else
 	filesdir=$1
 	searchstr=$2
 
 	if [ ! -d "$filesdir" ]
 	then
 	       	echo "incorrect directory"
-       		exit 1	       
+		exit 1	       
 	fi
-	
-	X=$(find . -type d -wholename "$filesdir" | wc -l)
+
+	X=$(find $filesdir -type f | wc -l)
 	Y=$(grep -r "$searchstr" "$filesdir" | wc -l)
 	echo "The number of files are $X and the number of matching lines are $Y"
-
-else
-	echo "total number of arguments should be 2."
-	echo "the order of the arguments should be: file directory path, text string"
-
 fi
 
