@@ -5,9 +5,6 @@
 set -e
 set -u
 
-filesdir=$1
-searchstr=$2
-
 if [ $# -lt 3 ]
 then
 	if [ $# -lt 2 ]
@@ -15,6 +12,9 @@ then
 		echo "not all arguments are provided"
 		exit 1
 	fi
+	
+	filesdir=$1
+	searchstr=$2
 
 	if [ ! -d "$filesdir" ]
 	then
@@ -22,8 +22,8 @@ then
        		exit 1	       
 	fi
 	
-	X=$(find ../ -type d -name "$filesdir" | wc -l)
-	Y=$(grep -r "$searchstr" "../$filesdir" | wc -l)
+	X=$(find . -type d -wholename "$filesdir" | wc -l)
+	Y=$(grep -r "$searchstr" "$filesdir" | wc -l)
 	echo "The number of files are $X and the number of matching lines are $Y"
 
 else
